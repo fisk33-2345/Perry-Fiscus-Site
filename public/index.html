@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perry Fiscus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --blue: #1a7fe8;
+      --blue-glow: rgba(26, 127, 232, 0.35);
+      --blue-dim: #1260b0;
+      --white: #ffffff;
+      --gray: #a0a0a8;
+      --border: #1e1e1e;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 3px;
+      background: var(--blue);
+      margin: 1.2rem auto 0;
+      border-radius: 2px;
+      box-shadow: 0 0 12px var(--blue-glow);
+    }
+
+    .site-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-shadow: 0 0 30px var(--blue-glow);
+    }
+
+    .site-tagline {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gray);
+      margin-top: 0.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0 1rem;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--gray);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--blue);
+      border-radius: 2px 2px 0 0;
+      box-shadow: 0 0 8px var(--blue-glow);
+      transition: width 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--white);
+    }
+
+    .nav-btn.active {
+      color: var(--blue);
+    }
+
+    .nav-btn.active::after {
+      width: 70%;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HOME PAGE ── */
+    .home-content {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .home-content h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .home-content p {
+      color: var(--gray);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .home-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--blue);
+      border-radius: 2px;
+      margin: 1.5rem auto;
+      box-shadow: 0 0 10px var(--blue-glow);
+    }
+
+    /* ── BIO PAGE ── */
+    .page-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .page-rule {
+      width: 50px;
+      height: 3px;
+      background: var(--blue);
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 8px var(--blue-glow);
+    }
+
+    .placeholder-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--blue);
+      border-radius: 6px;
+      padding: 2rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .placeholder-card strong {
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* ── FILES PAGE ── */
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .file-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--gray);
+      font-size: 0.9rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .file-card:hover {
+      border-color: var(--blue-dim);
+      box-shadow: 0 0 16px var(--blue-glow);
+    }
+
+    .file-card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+      color: #444;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 class="site-title">Perry Fiscus</h1>
+    <p class="site-tagline">My little corner of the web</p>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" onclick="showPage('home', this)">Home</button>
+    <button class="nav-btn" onclick="showPage('bio', this)">Bio</button>
+    <button class="nav-btn" onclick="showPage('files', this)">Files</button>
+  </nav>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="page-home" class="page active">
+      <div class="home-content">
+        <h2>Welcome</h2>
+        <div class="home-divider"></div>
+        <p>A place to share my work, my music, and whatever else I feel like putting out into the world. Look around — more content gets added all the time.</p>
+      </div>
+    </section>
+
+    <!-- BIO -->
+    <section id="page-bio" class="page">
+      <h2 class="page-heading">Bio</h2>
+      <div class="page-rule"></div>
+      <div class="placeholder-card">
+        <strong>Coming soon.</strong> This is where Perry's bio will live — background, what he does, what drives him. Check back soon.
+      </div>
+    </section>
+
+    <!-- FILES -->
+    <section id="page-files" class="page">
+      <h2 class="page-heading">Files</h2>
+      <div class="page-rule"></div>
+      <div class="files-grid">
+        <div class="file-card">
+          <span class="file-card-icon">🎵</span>
+          Music coming soon
+        </div>
+        <div class="file-card">
+          <span class="file-card-icon">📄</span>
+          Documents coming soon
+        </div>
+        <div class="file-card">
+          <span class="file-card-icon">🎬</span>
+          Videos coming soon
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Perry Fiscus. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function showPage(id, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
