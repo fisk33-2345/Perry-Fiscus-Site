@@ -15,9 +15,11 @@
     :root {
       --bg: #0a0a0a;
       --surface: #111111;
+      --surface2: #161616;
       --blue: #1a7fe8;
       --blue-glow: rgba(26, 127, 232, 0.35);
       --blue-dim: #1260b0;
+      --blue-dark: #0d3d70;
       --white: #ffffff;
       --gray: #a0a0a8;
       --border: #1e1e1e;
@@ -33,7 +35,7 @@
     /* ── HEADER ── */
     header {
       text-align: center;
-      padding: 3rem 1rem 2rem;
+      padding: 2.5rem 1rem 1.5rem;
       border-bottom: 1px solid var(--border);
       position: relative;
     }
@@ -41,17 +43,17 @@
     header::after {
       content: '';
       display: block;
-      width: 120px;
+      width: 100px;
       height: 3px;
       background: var(--blue);
-      margin: 1.2rem auto 0;
+      margin: 1rem auto 0;
       border-radius: 2px;
-      box-shadow: 0 0 12px var(--blue-glow);
+      box-shadow: 0 0 14px var(--blue-glow);
     }
 
     .site-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
       font-weight: 900;
       letter-spacing: 0.04em;
       text-transform: uppercase;
@@ -60,11 +62,11 @@
     }
 
     .site-tagline {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 400;
       color: var(--gray);
-      margin-top: 0.5rem;
-      letter-spacing: 0.08em;
+      margin-top: 0.4rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
@@ -72,10 +74,14 @@
     nav {
       display: flex;
       justify-content: center;
-      gap: 0.25rem;
+      flex-wrap: wrap;
+      gap: 0;
       padding: 0 1rem;
       background-color: var(--surface);
       border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .nav-btn {
@@ -83,11 +89,11 @@
       border: none;
       color: var(--gray);
       font-family: 'Barlow', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.25rem;
       cursor: pointer;
       position: relative;
       transition: color 0.2s ease;
@@ -107,73 +113,260 @@
       transition: width 0.25s ease;
     }
 
-    .nav-btn:hover {
-      color: var(--white);
-    }
+    .nav-btn:hover { color: var(--white); }
+    .nav-btn.active { color: var(--blue); }
+    .nav-btn.active::after { width: 70%; }
 
-    .nav-btn.active {
-      color: var(--blue);
-    }
-
-    .nav-btn.active::after {
-      width: 70%;
-    }
-
-    /* ── MAIN CONTENT ── */
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
-
-    .page {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
+    /* ── PAGES ── */
+    .page { display: none; animation: fadeIn 0.3s ease; }
+    .page.active { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── HOME PAGE ── */
-    .home-content {
-      text-align: center;
-      padding: 4rem 1rem;
+    /* ══════════════════════════════
+       HOME PAGE
+    ══════════════════════════════ */
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #0d2a50 50%, #0a1628 100%);
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .home-content h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: var(--white);
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(26,127,232,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      color: var(--blue);
       margin-bottom: 1rem;
     }
 
-    .home-content p {
+    .hero-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-headline span {
+      color: var(--blue);
+    }
+
+    .hero-sub {
       color: var(--gray);
       font-size: 1.05rem;
       line-height: 1.7;
-      max-width: 520px;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 0.75rem 1.75rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: #2289f5;
+      box-shadow: 0 0 20px var(--blue-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.25);
+      padding: 0.75rem 1.75rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .hero-image {
+      flex: 0 0 420px;
+      max-width: 420px;
+    }
+
+    .hero-image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(26,127,232,0.2);
+      display: block;
+    }
+
+    .hero-image-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      border: 2px dashed #2a4a6a;
+      background: rgba(26,127,232,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #2a5a8a;
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 2rem;
+      gap: 0.5rem;
+    }
+
+    .hero-image-placeholder span {
+      font-size: 2.5rem;
+    }
+
+    /* Wave separator */
+    .wave-sep {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      background: var(--bg);
+    }
+
+    .wave-sep svg {
+      display: block;
+      width: 100%;
+    }
+
+    /* Feature cards */
+    .features {
+      background: var(--bg);
+      padding: 4rem 2rem;
+    }
+
+    .features-inner {
+      max-width: 1100px;
       margin: 0 auto;
     }
 
-    .home-divider {
-      width: 60px;
-      height: 3px;
-      background: var(--blue);
-      border-radius: 2px;
-      margin: 1.5rem auto;
-      box-shadow: 0 0 10px var(--blue-glow);
+    .features-heading {
+      text-align: center;
+      margin-bottom: 2.5rem;
     }
 
-    /* ── BIO PAGE ── */
+    .features-heading h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--white);
+    }
+
+    .features-heading p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--blue-dim);
+      box-shadow: 0 0 24px var(--blue-glow);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-card p {
+      color: var(--gray);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* ══════════════════════════════
+       INNER PAGES (BIO, FILES, VIDEOS, MUSIC)
+    ══════════════════════════════ */
+    .inner-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+
     .page-heading {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 2rem;
@@ -209,12 +402,11 @@
       font-weight: 600;
     }
 
-    /* ── FILES PAGE ── */
+    /* Files grid */
     .files-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1rem;
-      margin-top: 0.5rem;
     }
 
     .file-card {
@@ -239,6 +431,94 @@
       display: block;
     }
 
+    /* Videos grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .video-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .video-card:hover {
+      border-color: var(--blue-dim);
+      box-shadow: 0 0 20px var(--blue-glow);
+      transform: translateY(-2px);
+    }
+
+    .video-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 3rem;
+    }
+
+    .video-info {
+      padding: 1rem;
+    }
+
+    .video-info h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .video-info p {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* Music grid */
+    .music-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .music-track {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .music-track:hover {
+      border-color: var(--blue-dim);
+      box-shadow: 0 0 16px var(--blue-glow);
+    }
+
+    .music-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .music-info h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .music-info p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 0.1rem;
+    }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -247,6 +527,29 @@
       color: #444;
       font-size: 0.8rem;
       letter-spacing: 0.05em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .hero-image {
+        flex: none;
+        max-width: 300px;
+        width: 100%;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-sub {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
   </style>
 </head>
@@ -260,31 +563,150 @@
   <nav>
     <button class="nav-btn active" onclick="showPage('home', this)">Home</button>
     <button class="nav-btn" onclick="showPage('bio', this)">Bio</button>
+    <button class="nav-btn" onclick="showPage('videos', this)">Videos</button>
+    <button class="nav-btn" onclick="showPage('music', this)">Music</button>
     <button class="nav-btn" onclick="showPage('files', this)">Files</button>
   </nav>
 
-  <main>
+  <!-- ══ HOME ══ -->
+  <section id="page-home" class="page active">
 
-    <!-- HOME -->
-    <section id="page-home" class="page active">
-      <div class="home-content">
-        <h2>Welcome</h2>
-        <div class="home-divider"></div>
-        <p>A place to share my work, my music, and whatever else I feel like putting out into the world. Look around — more content gets added all the time.</p>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-eyebrow">Welcome to my world</p>
+          <h2 class="hero-headline">Ideas, music,<br>and <span>unfiltered</span><br>creativity</h2>
+          <p class="hero-sub">A place where I share my work, my music, and everything in between. Pull up a chair — there's always something new.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="showPage('videos', document.querySelectorAll('.nav-btn')[2])">Watch Videos</button>
+            <button class="btn-secondary" onclick="showPage('music', document.querySelectorAll('.nav-btn')[3])">Hear the Music</button>
+          </div>
+        </div>
+        <div class="hero-image">
+          <!-- Save your photo as: public/images/hero.jpg -->
+          <img src="images/hero.jpg" alt="Perry Fiscus" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="hero-image-placeholder" style="display:none;">
+            <span>📸</span>
+            <strong>Add your photo here</strong>
+            Save image as:<br><code>public/images/hero.jpg</code>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- BIO -->
-    <section id="page-bio" class="page">
+    <svg class="wave-sep" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C360,60 1080,0 1440,30 L1440,0 L0,0 Z" fill="#0d2a50"/>
+    </svg>
+
+    <div class="features">
+      <div class="features-inner">
+        <div class="features-heading">
+          <h2>What you'll find here</h2>
+          <p>Explore the different sides of what I do</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card" onclick="showPage('bio', document.querySelectorAll('.nav-btn')[1])">
+            <span class="feature-icon">👤</span>
+            <h3>Bio</h3>
+            <p>A little about who I am and what I'm all about.</p>
+          </div>
+          <div class="feature-card" onclick="showPage('videos', document.querySelectorAll('.nav-btn')[2])">
+            <span class="feature-icon">🎬</span>
+            <h3>Videos</h3>
+            <p>YouTube content, tutorials, and whatever I'm filming.</p>
+          </div>
+          <div class="feature-card" onclick="showPage('music', document.querySelectorAll('.nav-btn')[3])">
+            <span class="feature-icon">🎵</span>
+            <h3>Music</h3>
+            <p>Original tracks and projects I've put together.</p>
+          </div>
+          <div class="feature-card" onclick="showPage('files', document.querySelectorAll('.nav-btn')[4])">
+            <span class="feature-icon">📁</span>
+            <h3>Files</h3>
+            <p>Documents, downloads, and other shared resources.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══ BIO ══ -->
+  <section id="page-bio" class="page">
+    <div class="inner-page">
       <h2 class="page-heading">Bio</h2>
       <div class="page-rule"></div>
       <div class="placeholder-card">
         <strong>Coming soon.</strong> This is where Perry's bio will live — background, what he does, what drives him. Check back soon.
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FILES -->
-    <section id="page-files" class="page">
+  <!-- ══ VIDEOS ══ -->
+  <section id="page-videos" class="page">
+    <div class="inner-page">
+      <h2 class="page-heading">Videos</h2>
+      <div class="page-rule"></div>
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-thumb">▶</div>
+          <div class="video-info">
+            <h3>Video Title Here</h3>
+            <p>Coming soon — check back for new uploads.</p>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb">▶</div>
+          <div class="video-info">
+            <h3>Video Title Here</h3>
+            <p>Coming soon — check back for new uploads.</p>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-thumb">▶</div>
+          <div class="video-info">
+            <h3>Video Title Here</h3>
+            <p>Coming soon — check back for new uploads.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MUSIC ══ -->
+  <section id="page-music" class="page">
+    <div class="inner-page">
+      <h2 class="page-heading">Music</h2>
+      <div class="page-rule"></div>
+      <div class="music-list">
+        <div class="music-track">
+          <span class="music-icon">🎵</span>
+          <div class="music-info">
+            <h3>Track Title</h3>
+            <p>Coming soon — music on the way.</p>
+          </div>
+        </div>
+        <div class="music-track">
+          <span class="music-icon">🎵</span>
+          <div class="music-info">
+            <h3>Track Title</h3>
+            <p>Coming soon — music on the way.</p>
+          </div>
+        </div>
+        <div class="music-track">
+          <span class="music-icon">🎵</span>
+          <div class="music-info">
+            <h3>Track Title</h3>
+            <p>Coming soon — music on the way.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FILES ══ -->
+  <section id="page-files" class="page">
+    <div class="inner-page">
       <h2 class="page-heading">Files</h2>
       <div class="page-rule"></div>
       <div class="files-grid">
@@ -301,9 +723,8 @@
           Videos coming soon
         </div>
       </div>
-    </section>
-
-  </main>
+    </div>
+  </section>
 
   <footer>
     &copy; <span id="year"></span> Perry Fiscus. All rights reserved.
@@ -316,7 +737,8 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('page-' + id).classList.add('active');
-      btn.classList.add('active');
+      if (btn) btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 
