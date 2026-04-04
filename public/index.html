@@ -561,11 +561,11 @@
   </header>
 
   <nav>
-    <button class="nav-btn active" onclick="showPage('home', this)">Home</button>
-    <button class="nav-btn" onclick="showPage('bio', this)">Bio</button>
-    <button class="nav-btn" onclick="showPage('videos', this)">Videos</button>
-    <button class="nav-btn" onclick="showPage('music', this)">Music</button>
-    <button class="nav-btn" onclick="showPage('files', this)">Files</button>
+    <button class="nav-btn active" data-page="home" onclick="navigate('home')">Home</button>
+    <button class="nav-btn" data-page="bio" onclick="navigate('bio')">Bio</button>
+    <button class="nav-btn" data-page="videos" onclick="navigate('videos')">Videos</button>
+    <button class="nav-btn" data-page="music" onclick="navigate('music')">Music</button>
+    <button class="nav-btn" data-page="files" onclick="navigate('files')">Files</button>
   </nav>
 
   <!-- ══ HOME ══ -->
@@ -578,8 +578,8 @@
           <h2 class="hero-headline">Ideas, music,<br>and <span>unfiltered</span><br>creativity</h2>
           <p class="hero-sub">A place where I share my work, my music, and everything in between. Pull up a chair — there's always something new.</p>
           <div class="hero-actions">
-            <button class="btn-primary" onclick="showPage('videos', document.querySelectorAll('.nav-btn')[2])">Watch Videos</button>
-            <button class="btn-secondary" onclick="showPage('music', document.querySelectorAll('.nav-btn')[3])">Hear the Music</button>
+            <button class="btn-primary" onclick="navigate('videos')">Watch Videos</button>
+            <button class="btn-secondary" onclick="navigate('music')">Hear the Music</button>
           </div>
         </div>
         <div class="hero-image">
@@ -605,22 +605,22 @@
           <p>Explore the different sides of what I do</p>
         </div>
         <div class="feature-grid">
-          <div class="feature-card" onclick="showPage('bio', document.querySelectorAll('.nav-btn')[1])">
+          <div class="feature-card" onclick="navigate('bio')">
             <span class="feature-icon">👤</span>
             <h3>Bio</h3>
             <p>A little about who I am and what I'm all about.</p>
           </div>
-          <div class="feature-card" onclick="showPage('videos', document.querySelectorAll('.nav-btn')[2])">
+          <div class="feature-card" onclick="navigate('videos')">
             <span class="feature-icon">🎬</span>
             <h3>Videos</h3>
             <p>YouTube content, tutorials, and whatever I'm filming.</p>
           </div>
-          <div class="feature-card" onclick="showPage('music', document.querySelectorAll('.nav-btn')[3])">
+          <div class="feature-card" onclick="navigate('music')">
             <span class="feature-icon">🎵</span>
             <h3>Music</h3>
             <p>Original tracks and projects I've put together.</p>
           </div>
-          <div class="feature-card" onclick="showPage('files', document.querySelectorAll('.nav-btn')[4])">
+          <div class="feature-card" onclick="navigate('files')">
             <span class="feature-icon">📁</span>
             <h3>Files</h3>
             <p>Documents, downloads, and other shared resources.</p>
@@ -733,13 +733,27 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    function showPage(id, btn) {
+    function showPage(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('page-' + id).classList.add('active');
-      if (btn) btn.classList.add('active');
+      const activeBtn = document.querySelector(`.nav-btn[data-page="${id}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    function navigate(id) {
+      window.location.hash = id;
+    }
+
+    function handleHash() {
+      const id = window.location.hash.replace('#', '') || 'home';
+      const validPages = ['home', 'bio', 'videos', 'music', 'files'];
+      showPage(validPages.includes(id) ? id : 'home');
+    }
+
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('DOMContentLoaded', handleHash);
   </script>
 
 </body>
